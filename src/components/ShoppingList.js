@@ -2,14 +2,10 @@ import React, { useEffect, useState } from "react";
 import ItemForm from "./ItemForm";
 import Filter from "./Filter";
 import Item from "./Item";
-import { v1 as uuid } from "uuid";
 
 function ShoppingList() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [items, setItems] = useState([]);
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("Produce");
-  const [isInCart, setIsInCart] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:4000/items")
@@ -27,55 +23,29 @@ function ShoppingList() {
     return item.category === selectedCategory;
   });
 
-  function handleDelete(event) {
-    let id = event.target.id;
-    fetch(`http://localhost:4000/items/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    let newItems = items.filter((item) => item.id+'' !== id+'');
+  function handleDelete(id) {
+    console.log(id);
+    let newItems = items.filter((item) => item.id + "" !== id + "");
     setItems(newItems);
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const formData = { id: uuid(), name, category, isInCart };
-
-    fetch("http://localhost:4000/items", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    setItems([...items, formData]);
+  function onAddNewItem(item) {
+    setItems([...items, item]);
   }
 
-  function handleAddToCart(event) {
-    let id = event.target.id;
+  function onAddToCart(udpdatedItem) {
     let newItems = items.map((item) => {
-      if (item.id+'' === id+'') {
-        setIsInCart((isInCart) => !isInCart);
-        return { ...item, isInCart: !isInCart };
+      if (item.id + "" === udpdatedItem.id + "") {
+        return udpdatedItem;
       }
       return item;
     });
-
     setItems(newItems);
   }
 
   return (
     <div className="ShoppingList">
-      <ItemForm
-        handleSubmit={handleSubmit}
-        setName={setName}
-        setCategory={setCategory}
-        category={category}
-        name={name}
-      />
+      <ItemForm onAddNewItem={onAddNewItem} />
       <Filter
         category={selectedCategory}
         onCategoryChange={handleCategoryChange}
@@ -85,8 +55,8 @@ function ShoppingList() {
           <Item
             key={item.id}
             item={item}
-            handleDelete={handleDelete}
-            handleAddToCart={handleAddToCart}
+            onDelete={handleDelete}
+            onAddToCart={onAddToCart}
           />
         ))}
       </ul>
