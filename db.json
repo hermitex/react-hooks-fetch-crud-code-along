@@ -1,18 +1,6 @@
 {
   "items": [
     {
-      "id": 1,
-      "name": "Yogurt",
-      "category": "Dairy",
-      "isInCart": false
-    },
-    {
-      "id": 2,
-      "name": "Pomegranate",
-      "category": "Produce",
-      "isInCart": false
-    },
-    {
       "id": 3,
       "name": "Lettuce",
       "category": "Produce",
@@ -34,6 +22,12 @@
       "id": 6,
       "name": "Cookies",
       "category": "Dessert",
+      "isInCart": false
+    },
+    {
+      "id": "ad3ac9f0-08d9-11ed-8138-c98669f05733",
+      "name": "Yogurt",
+      "category": "Dairy",
       "isInCart": false
     }
   ]

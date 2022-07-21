@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
-function ItemForm() {
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("Produce");
-
+function ItemForm({handleSubmit, setName, setCategory, name, category}) {
   return (
-    <form className="NewItem">
+    <form className="NewItem" onSubmit={handleSubmit}>
       <label>
         Name:
         <input
@@ -13,6 +10,7 @@ function ItemForm() {
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required={true}
         />
       </label>
 
