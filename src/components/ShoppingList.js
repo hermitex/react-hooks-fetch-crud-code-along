@@ -24,7 +24,6 @@ function ShoppingList() {
   });
 
   function handleDelete(id) {
-    console.log(id);
     let newItems = items.filter((item) => item.id + "" !== id + "");
     setItems(newItems);
   }
